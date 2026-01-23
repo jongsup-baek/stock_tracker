@@ -10,7 +10,7 @@ on:
       stock_codes:
         description: '조회할 종목코드 (쉼표로 구분)'
         required: false
-        default: '005930,000660,035420'
+        default: '005930,000660,272210,012330,012450,267260'
 
 jobs:
   fetch-stocks:
