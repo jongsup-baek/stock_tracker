@@ -32,11 +32,18 @@ jobs:
 
       - name: 주식 정보 수집
         run: |
-          # 기본 종목 리스트 (수동 실행 시 입력값 우선)
+          # 수동 실행 시 입력값 우선, 없으면 PORTFOLIO.md에서 읽기
           STOCKS="${{ github.event.inputs.stock_codes }}"
           if [ -z "$STOCKS" ]; then
-            STOCKS="005930,000660,272210,012330,012450,267260"
+            echo "Reading stock codes from PORTFOLIO.md..."
+            STOCKS=$(python extract_watchlist.py)
+            if [ $? -ne 0 ]; then
+              echo "Failed to read PORTFOLIO.md, using default list"
+              STOCKS="005930,000660,272210,012330,012450,267260"
+            fi
           fi
+
+          echo "Target stocks: $STOCKS"
 
           # 각 종목별로 데이터 수집
           IFS=',' read -ra STOCK_ARRAY <<< "$STOCKS"
