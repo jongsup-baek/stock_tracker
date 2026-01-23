@@ -21,10 +21,11 @@
    "1월 24일 Daily Report 만들어줘"
    ```
 
-2. **Claude가 GitHub에서 데이터 읽기**:
-   - `data/stock_*.json` - 당일 주가 데이터 (6개 종목)
-   - `docs/PORTFOLIO.md` - 관심 종목 및 매매 히스토리
-   - `docs/OPERATION_MANUAL.md` - 매매 규칙 (v1.3)
+2. **Claude가 데이터 읽기**:
+   - GitHub `data/stock_*.json` - 당일 주가 데이터 (6개 종목)
+   - GitHub `docs/PORTFOLIO.md` - 관심 종목
+   - GitHub `docs/OPERATION_MANUAL.md` - 매매 규칙 (v1.3)
+   - Notion 매매 히스토리 DB - 매수가, 수량, 거래 내역
 
 3. **분석 및 생성**:
    - 정배열 조건 확인
@@ -44,11 +45,15 @@
 | 항목 | 저장 위치 | 역할 | 업데이트 주기 |
 | --- | --- | --- | --- |
 | **주가 데이터** | GitHub `/data/` | 원본 데이터 (JSON) | 매일 자동 (GitHub Actions) |
+| **관심 종목** | GitHub `/docs/PORTFOLIO.md` | 관심 종목 목록 (Public OK) | 수동 (필요 시) |
 | **운영 문서** | GitHub `/docs/` | 상세 규칙 (AI용) | 수동 (필요 시) |
+| **매매 히스토리** | Notion DB | 매수/매도 기록 (Private) | 거래 체결 시 |
 | **Daily Report** | Notion DB | 일일 분석 결과 | 매일 수동 (Claude 요청) |
 | **투자 규칙 요약** | Notion 메인 페이지 | 간단 참조 (사람용) | 수동 (규칙 변경 시) |
 
-> 💡 **Single Source of Truth**: 상세한 규칙과 데이터는 모두 GitHub에 있으며, Claude가 이를 읽어서 Notion에 Daily Report를 생성합니다.
+> 💡 **데이터 분리**: 공개 가능한 정보(주가, 규칙)는 GitHub에, 민감한 정보(매수가, 수량)는 Notion에 저장합니다.
+
+> 🔒 **민감 정보 보호**: 매수가, 수량 등의 민감한 정보는 Notion에만 저장하고, GitHub는 Public으로 공개해도 안전합니다.
 
 ---
 
