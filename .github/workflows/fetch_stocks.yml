@@ -35,7 +35,7 @@ jobs:
           # 기본 종목 리스트 (수동 실행 시 입력값 우선)
           STOCKS="${{ github.event.inputs.stock_codes }}"
           if [ -z "$STOCKS" ]; then
-            STOCKS="005930,000660,035420,005380,051910"
+            STOCKS="005930,000660,272210,012330,012450,267260"
           fi
 
           # 각 종목별로 데이터 수집

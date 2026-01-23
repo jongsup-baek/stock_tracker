@@ -13,9 +13,9 @@ venv/
 env/
 ENV/
 
-# Data files - JSON과 CSV만 제외, 폴더는 유지
-data/*.json
-data/*.csv
+# Data files - GitHub에 저장하여 Claude.ai가 읽을 수 있도록 함
+# data/*.json
+# data/*.csv
 
 # IDE
 .vscode/
