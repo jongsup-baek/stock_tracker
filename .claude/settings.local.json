@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source venv/bin/activate)",
+      "Bash(pip install:*)",
+      "Bash(git init:*)",
+      "Bash(tree:*)",
+      "Bash(ls:*)",
+      "Bash(chmod:*)",
+      "Bash(echo:*)",
+      "Bash(~/.zshrc)",
+      "Bash(source:*)",
+      "Bash(/Users/jongsupbaek/stock_tracker/stock_fetcher.py 000660)",
+      "Bash(alias stock)",
+      "Bash(stock 035420:*)"
+    ]
+  }
+}

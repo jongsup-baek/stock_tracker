@@ -1,0 +1,61 @@
+name: 주식 정보 자동 수집
+
+on:
+  schedule:
+    # 매일 오후 4시(한국시간 기준, UTC+9 고려하여 오전 7시 UTC)에 실행
+    - cron: '0 7 * * 1-5'  # 월-금 오전 7시 UTC (한국 오후 4시)
+
+  workflow_dispatch:  # 수동 실행 가능
+    inputs:
+      stock_codes:
+        description: '조회할 종목코드 (쉼표로 구분)'
+        required: false
+        default: '005930,000660,035420'
+
+jobs:
+  fetch-stocks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: 패키지 설치
+        run: |
+          pip install -r requirements.txt
+
+      - name: 주식 정보 수집
+        run: |
+          # 기본 종목 리스트 (수동 실행 시 입력값 우선)
+          STOCKS="${{ github.event.inputs.stock_codes }}"
+          if [ -z "$STOCKS" ]; then
+            STOCKS="005930,000660,035420,005380,051910"
+          fi
+
+          # 각 종목별로 데이터 수집
+          IFS=',' read -ra STOCK_ARRAY <<< "$STOCKS"
+          for stock in "${STOCK_ARRAY[@]}"; do
+            echo "Fetching data for stock: $stock"
+            python stock_fetcher.py "$stock" || echo "Failed to fetch $stock"
+          done
+
+      - name: Git 설정
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+
+      - name: 변경사항 커밋 및 푸시
+        run: |
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "📊 자동 주식 데이터 업데이트 - $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          fi
