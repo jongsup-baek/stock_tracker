@@ -86,6 +86,30 @@ Mac을 켜두지 않아도 GitHub Actions를 사용하여 클라우드에서 자
 
 자세한 설정 방법은 [GITHUB_SETUP.md](GITHUB_SETUP.md)를 참고하세요.
 
+## 투자 운영 문서 📁
+
+`docs/` 폴더에 투자 운영을 위한 문서들이 있습니다.
+
+| 문서 | 설명 |
+|------|------|
+| [OPERATION_MANUAL.md](docs/OPERATION_MANUAL.md) | 투자 규칙과 매매 조건 (v1.3) |
+| [OPERATION_GUIDE.md](docs/OPERATION_GUIDE.md) | Daily Report 템플릿과 사용 가이드 |
+| [PORTFOLIO.md](docs/PORTFOLIO.md) | 현재 포트폴리오 현황 |
+
+### Claude.ai Projects 활용
+
+GitHub에 저장된 데이터와 문서를 Claude.ai Projects에서 읽어서 Daily Report를 자동 생성할 수 있습니다:
+
+```
+"1월 27일 Daily Report 만들어줘"
+```
+
+Claude가 자동으로:
+- GitHub에서 최신 주식 데이터 읽기
+- 운영 매뉴얼 규칙에 따라 매수/매도 조건 점검
+- 포트폴리오 현황 분석
+- Daily Report 생성
+
 ## 처음 설치하는 경우
 
 설치가 필요한 경우 [DEVELOPMENT.md](DEVELOPMENT.md) 문서를 참고하세요.
