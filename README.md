@@ -92,9 +92,9 @@ Mac을 켜두지 않아도 GitHub Actions를 사용하여 클라우드에서 자
 
 | 문서 | 설명 |
 |------|------|
-| [OPERATION_MANUAL.md](docs/OPERATION_MANUAL.md) | 투자 규칙과 매매 조건 (v1.3) |
+| [OPERATION_MANUAL.md](docs/OPERATION_MANUAL.md) | 투자 규칙과 매매 조건 (v1.4) |
 | [OPERATION_GUIDE.md](docs/OPERATION_GUIDE.md) | Daily Report 템플릿과 사용 가이드 |
-| [PORTFOLIO.md](docs/PORTFOLIO.md) | 현재 포트폴리오 현황 |
+| [PORTFOLIO.md](docs/PORTFOLIO.md) | 관심 종목 (Watchlist) |
 
 ### Claude.ai Projects 활용
 
@@ -106,9 +106,10 @@ GitHub에 저장된 데이터와 문서를 Claude.ai Projects에서 읽어서 Da
 
 Claude가 자동으로:
 - GitHub에서 최신 주식 데이터 읽기
-- 운영 매뉴얼 규칙에 따라 매수/매도 조건 점검
-- 포트폴리오 현황 분석
-- Daily Report 생성
+- GitHub에서 운영 매뉴얼 및 관심 종목 읽기
+- Notion에서 매매 히스토리 읽기
+- 매수/매도 조건 점검 및 포트폴리오 분석
+- Notion DB에 Daily Report 생성
 
 ## 처음 설치하는 경우
 
