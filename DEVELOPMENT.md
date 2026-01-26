@@ -1,9 +1,11 @@
 # 개발자 가이드
 
-이 문서는 프로젝트를 수정하거나 개발에 참여하려는 개발자를 위한 가이드입니다.
+이 문서는 stock_fetcher.py CLI 도구 사용법과 개발에 참여하려는 개발자를 위한 가이드입니다.
 
 ## 목차
 
+- [CLI 주요 기능](#cli-주요-기능)
+- [CLI 사용법](#cli-사용법)
 - [개발 환경 설정](#개발-환경-설정)
 - [프로젝트 구조](#프로젝트-구조)
 - [코드 설명](#코드-설명)
@@ -11,12 +13,92 @@
 - [테스트](#테스트)
 - [배포](#배포)
 
+---
+
+## CLI 주요 기능
+
+- 실시간 현재가 조회
+- 특정 날짜의 주식 정보 조회
+- 과거 데이터 (일봉) 조회
+- 이동평균(MA5, MA10, MA20) 자동 계산
+- JSON 및 CSV 파일로 데이터 저장
+- 자동 데이터 갭 감지 및 보완
+- GitHub Actions를 통한 클라우드 자동 실행
+
+---
+
+## CLI 사용법
+
+### 기본 명령어
+
+```bash
+# 현재가 조회
+stock 005930
+
+# 특정 날짜 조회
+stock 005930 --date 2026-01-20
+
+# 과거 데이터 조회
+stock 005930 --history 10
+```
+
+### 주요 종목 코드
+
+| 종목명 | 코드 |
+|--------|------|
+| 삼성전자 | 005930 |
+| SK하이닉스 | 000660 |
+| NAVER | 035420 |
+| 현대차 | 005380 |
+| LG화학 | 051910 |
+| POSCO홀딩스 | 005490 |
+
+### 출력 예시
+
+```
+종목 코드 005930의 정보를 가져오는 중...
+
+새 종목입니다. 최근 20일(워킹데이) 데이터를 먼저 수집합니다...
+초기 데이터 수집 완료 (20일)
+
+=== 주식 정보 ===
+종목코드: 005930
+종목명: 삼성전자
+날짜: 2026-01-23
+시가: 154,700
+고가: 156,000
+저가: 150,100
+종가: 152,100
+거래량: 25,195,543
+
+=== 이동평균 ===
+MA5: 149,680원
+MA10: 145,790원
+MA20: 137,485원
+```
+
+### 자동 데이터 관리
+
+- **신규 종목**: 처음 조회 시 자동으로 최근 20일(워킹데이) 데이터 수집
+- **누락 데이터 보완**: 마지막 업데이트가 오늘이 아닌 경우, 자동으로 누락된 날짜 데이터 추가
+- **일상 업데이트**: 최신 상태이면 현재가만 빠르게 조회
+
+### 출력 파일
+
+조회 결과는 `data/` 폴더에 자동 저장됩니다.
+
+- `stock_005930.json` - JSON 형식
+- `stock_005930.csv` - CSV 형식
+- 최근 20일(워킹데이) 데이터만 유지
+
+---
+
 ## 개발 환경 설정
 
 ### 1. 가상환경 생성 및 활성화
 
 ```bash
-cd ~/stock_tracker
+cd ~/jongsup-baek.github/stock_tracker
 python3 -m venv venv
 
 # macOS/Linux
@@ -190,7 +272,7 @@ python stock_fetcher.py 005930 --date 2026-01-25  # 토요일
 ### 실행 가능하게 만들기
 
 ```bash
-chmod +x ~/stock_tracker/stock_fetcher.py
+chmod +x ~/jongsup-baek.github/stock_tracker/stock_fetcher.py
 ```
 
 ### 쉘 별칭 설정
@@ -200,27 +282,27 @@ chmod +x ~/stock_tracker/stock_fetcher.py
 #### macOS 기본 쉘 (zsh)
 
 ```bash
-echo "alias stock='/Users/jongsupbaek/stock_tracker/stock_fetcher.py'" >> ~/.zshrc
+echo "alias stock='~/jongsup-baek.github/stock_tracker/stock_fetcher.py'" >> ~/.zshrc
 source ~/.zshrc
 ```
 
 #### bash 쉘
 
 ```bash
-echo "alias stock='/Users/jongsupbaek/stock_tracker/stock_fetcher.py'" >> ~/.bash_profile
+echo "alias stock='~/jongsup-baek.github/stock_tracker/stock_fetcher.py'" >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
 #### csh/tcsh 쉘
 
 ```bash
-echo "alias stock '/Users/jongsupbaek/stock_tracker/stock_fetcher.py'" >> ~/.cshrc
+echo "alias stock '~/jongsup-baek.github/stock_tracker/stock_fetcher.py'" >> ~/.cshrc
 source ~/.cshrc
 ```
 
 ### Shebang 라인 설명
 
-파일 첫 줄의 `#!/Users/jongsupbaek/stock_tracker/venv/bin/python`은:
+파일 첫 줄의 `#!~/jongsup-baek.github/stock_tracker/venv/bin/python`은:
 - 스크립트가 어떤 Python 인터프리터를 사용할지 지정
 - 가상환경의 Python을 자동으로 사용하므로 venv 활성화 불필요
 - 스크립트를 직접 실행 가능하게 만듦
