@@ -110,7 +110,10 @@ Daily Report를 생성하기 위한 순서입니다:
 3. Cowork 세션 시작
    → Claude Desktop에서 Cowork 모드로 stock_tracker 폴더 선택
 
-4. Daily Report 요청
+4. Notion 페이지 링크 공유
+   → "https://www.notion.so/2c0ef155d17180c99ff9c7d243962092 확인해줘"
+
+5. Daily Report 요청
    → "1월 27일 Daily Report 만들어줘"
 ```
 
@@ -120,6 +123,17 @@ Claude가 자동으로:
 - Notion에서 매매 히스토리 읽기 (페이지 형식)
 - 매수/매도 조건 점검 및 포트폴리오 분석
 - Notion DB에 Daily Report 생성
+
+### Claude에게 요청할 수 있는 것들
+
+| 요청 | 예시 |
+|------|------|
+| Daily Report 생성 | "1월 27일 Daily Report 만들어줘" |
+| 매매 기록 | "오늘 삼성전자 10주 매수했어" |
+| 미체결 기록 | "현대모비스 매수 미체결됐어" |
+| 매도 기록 | "SK하이닉스 전량 매도했어 (익절)" |
+| 종목 분석 | "삼성전자 매수 조건 확인해줘" |
+| 포트폴리오 현황 | "현재 보유 종목 수익률 알려줘" |
 
 ### Notion 기록 규칙
 
