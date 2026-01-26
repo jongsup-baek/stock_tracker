@@ -96,20 +96,46 @@ Mac을 켜두지 않아도 GitHub Actions를 사용하여 클라우드에서 자
 | [OPERATION_GUIDE.md](docs/OPERATION_GUIDE.md) | Daily Report 템플릿과 사용 가이드 |
 | [PORTFOLIO.md](docs/PORTFOLIO.md) | 관심 종목 (Watchlist) |
 
-### Claude.ai Projects 활용
+### 일일 워크플로우 ⭐
 
-GitHub에 저장된 데이터와 문서를 Claude.ai Projects에서 읽어서 Daily Report를 자동 생성할 수 있습니다:
+Daily Report를 생성하기 위한 순서입니다:
 
 ```
-"1월 27일 Daily Report 만들어줘"
+1. GitHub Actions 실행 (수동 또는 자동)
+   → Repository > Actions > "Daily Stock Data Update" > Run workflow
+
+2. 로컬에 최신 데이터 동기화
+   → cd ~/stock_tracker && git pull
+
+3. Cowork 세션 시작
+   → Claude Desktop에서 Cowork 모드로 stock_tracker 폴더 선택
+
+4. Daily Report 요청
+   → "1월 27일 Daily Report 만들어줘"
 ```
 
 Claude가 자동으로:
-- GitHub에서 최신 주식 데이터 읽기
+- GitHub(로컬)에서 최신 주식 데이터 읽기
 - GitHub에서 운영 매뉴얼 및 관심 종목 읽기
-- Notion에서 매매 히스토리 읽기
+- Notion에서 매매 히스토리 읽기 (페이지 형식)
 - 매수/매도 조건 점검 및 포트폴리오 분석
 - Notion DB에 Daily Report 생성
+
+### Notion 기록 규칙
+
+| 항목 | 규칙 |
+|------|------|
+| **Daily Report Name** | "2026년 1월 26일" (날짜만) |
+| **매매 히스토리** | 페이지 형식 (DB 아님), 날짜별 섹션으로 기록 |
+| **미체결 주문** | 해당 날짜 섹션에 "종목명 매수 미체결"로 기록 |
+
+### 트러블슈팅
+
+| 문제 | 해결 |
+|------|------|
+| 주가 데이터가 오래됨 | GitHub Actions 수동 실행 후 `git pull` |
+| Cowork에서 데이터 못 읽음 | stock_tracker 폴더 다시 선택 |
+| 매매 히스토리 DB 읽기 실패 | 페이지 형식으로 변경됨 (2026-01-26~) |
 
 ## 처음 설치하는 경우
 
