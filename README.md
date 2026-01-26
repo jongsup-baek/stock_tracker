@@ -105,7 +105,7 @@ Daily Report를 생성하기 위한 순서입니다:
    → Repository > Actions > "Daily Stock Data Update" > Run workflow
 
 2. 로컬에 최신 데이터 동기화
-   → cd ~/stock_tracker && git pull
+   → cd ~/jongsup-baek.github/stock_tracker && git pull
 
 3. Cowork 세션 시작
    → Claude Desktop에서 Cowork 모드로 stock_tracker 폴더 선택
