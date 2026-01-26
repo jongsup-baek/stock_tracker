@@ -110,8 +110,9 @@ Daily Report를 생성하기 위한 순서입니다:
 3. Cowork 세션 시작
    → Claude Desktop에서 Cowork 모드로 stock_tracker 폴더 선택
 
-4. Notion 페이지 링크 공유
+4. Notion 페이지 링크 공유 및 숙지 요청
    → "https://www.notion.so/2c0ef155d17180c99ff9c7d243962092 확인해줘"
+   → "README 잘 읽고, Notion 페이지 꼼꼼히 읽고, 작업 어떻게 해야 할지 숙지해"
 
 5. Daily Report 요청
    → "1월 27일 Daily Report 만들어줘"
