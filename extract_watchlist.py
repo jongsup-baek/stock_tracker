@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 
-def extract_stock_codes(portfolio_path: str = "docs/PORTFOLIO.md") -> list[str]:
+def extract_stock_codes(portfolio_path: str = "docs/kr/PORTFOLIO.md") -> list[str]:
     """
     PORTFOLIO.md에서 관심 종목 코드를 추출합니다.
 

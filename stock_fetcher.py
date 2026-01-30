@@ -20,9 +20,9 @@ class NaverStockFetcher:
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
-        # data 폴더: 스크립트 위치 기준으로 설정
+        # data/kr 폴더: 스크립트 위치 기준으로 설정 (국내 주식)
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        self.data_dir = os.path.join(script_dir, "data")
+        self.data_dir = os.path.join(script_dir, "data", "kr")
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
 

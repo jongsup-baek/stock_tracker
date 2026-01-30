@@ -59,7 +59,7 @@ jobs:
 
       - name: 변경사항 커밋 및 푸시
         run: |
-          git add data/
+          git add data/kr/
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
