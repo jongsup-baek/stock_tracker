@@ -12,31 +12,32 @@
 
 | 파일/폴더 | 설명 |
 |-----------|------|
-| `stock_fetcher.py` | 메인 스크립트 (네이버 금융에서 데이터 수집) |
+| `stock_fetcher.py` | 메인 스크립트 (데이터 수집) |
 | `extract_watchlist.py` | `PORTFOLIO.md`에서 종목 코드 파싱 |
 | `requirements.txt` | Python 의존성 |
-| `data/` | 주식 데이터 (JSON/CSV) |
-| `docs/OPERATION_GUIDE.md` | Daily Report 템플릿 |
-| `docs/OPERATION_MANUAL.md` | 매수/매도 규칙 |
-| `docs/PORTFOLIO.md` | 관심 종목 목록 |
-| `.github/workflows/fetch_stocks.yml` | GitHub Actions (월-금 오후 6시 자동 실행) |
+| `data/kr/` | 국내 주식 데이터 (JSON/CSV) |
+| `data/us/` | 미국 주식 데이터 (JSON/CSV) |
+| `docs/kr/` | 국내 운영 문서 |
+| `docs/us/` | 미국 IRA 운영 문서 |
+| `.github/workflows/fetch_stocks.yml` | GitHub Actions |
+
+### 문서 경로
+
+| 시장 | PORTFOLIO | OPERATION_MANUAL | OPERATION_GUIDE |
+|------|-----------|------------------|-----------------|
+| **KR** | `docs/kr/PORTFOLIO.md` | `docs/kr/OPERATION_MANUAL.md` | `docs/kr/OPERATION_GUIDE.md` |
+| **US** | `docs/us/PORTFOLIO_US.md` | `docs/us/OPERATION_MANUAL_US.md` | `docs/us/OPERATION_GUIDE_US.md` |
 
 ---
 
 ## 2. 프로젝트 개요
 
-주식 자동 수집 시스템. GitHub Actions로 월-금 오후 6시에 자동 실행되어 네이버 금융에서 데이터를 수집하고, Claude.ai Projects와 Notion DB로 Daily Report를 생성한다.
+주식 자동 수집 시스템. GitHub Actions로 데이터를 수집하고, Claude.ai Projects와 Notion DB로 Daily Report를 생성한다.
 
-> **관심 종목**: `docs/PORTFOLIO.md` 참조 (종목 추가/삭제 시 해당 파일 수정)
-
-**워크플로우**
-
-1. GitHub Actions 자동 실행 (월-금 오후 6시)
-2. `PORTFOLIO.md`에서 종목 코드 읽기
-3. 네이버 금융에서 데이터 수집
-4. JSON/CSV로 저장 → GitHub 자동 commit & push
-5. Claude.ai Projects가 데이터 읽기
-6. Daily Report 생성 → Notion DB 저장
+| 시장 | 데이터 소스 | 장 마감 시간 |
+|------|------------|-------------|
+| **KR** | 네이버 금융 | 월-금 오후 6시 (KST) |
+| **US** | (TODO) | 미국 장 마감 후 |
 
 ---
 
@@ -46,24 +47,33 @@
 
 > **중요**: 아래 프로세스를 반드시 순서대로 따라야 합니다. 생략하면 종목 누락, 포맷 불일치 등의 문제가 발생합니다.
 
+#### 시장별 문서 경로
+
+| 단계 | KR | US |
+|------|----|----|
+| 1단계 문서 | `docs/kr/OPERATION_GUIDE.md` | `docs/us/OPERATION_GUIDE_US.md` |
+| | `docs/kr/OPERATION_MANUAL.md` | `docs/us/OPERATION_MANUAL_US.md` |
+| | `docs/kr/PORTFOLIO.md` | `docs/us/PORTFOLIO_US.md` |
+| 2단계 데이터 | `data/kr/stock_*.json` | `data/us/stock_*.json` |
+
 #### 1단계: 문서 읽기 (작성 전)
 
-Daily Report 작성 요청을 받으면, **작성 전에 반드시** 아래 문서들을 읽습니다:
+Daily Report 작성 요청을 받으면, **작성 전에 반드시** 해당 시장의 문서들을 읽습니다:
 
-1. `docs/OPERATION_GUIDE.md` - Daily Report 템플릿 및 섹션 구조 확인
-2. `docs/OPERATION_MANUAL.md` - 매수/매도 규칙 확인
-3. `docs/PORTFOLIO.md` - 관심 종목 확인
+1. `OPERATION_GUIDE` - Daily Report 템플릿 및 섹션 구조 확인
+2. `OPERATION_MANUAL` - 매수/매도 규칙 확인
+3. `PORTFOLIO` - 관심 종목 확인
 4. Notion 매매 히스토리 - 보유 종목 및 매수가 확인
 
 #### 2단계: 데이터 수집
 
-- `data/stock_*.json` 파일 **전체 종목** 읽기
-- 절대 종목을 빠뜨리지 않도록 `docs/PORTFOLIO.md`와 대조
+- 해당 시장의 `data/` 폴더에서 **전체 종목** 읽기
+- 절대 종목을 빠뜨리지 않도록 `PORTFOLIO`와 대조
 - **오늘 날짜와 어제 날짜 데이터 모두 확인** (전일비 계산용)
 
 #### 3단계: 작성
 
-- `OPERATION_GUIDE.md`의 템플릿(섹션 1~7)에 맞춰 작성
+- `OPERATION_GUIDE`의 템플릿(섹션 1~7)에 맞춰 작성
 - 넘버링 시스템 사용 (1., 1.1, 2., 2.1 ...)
 
 #### 4단계: 매수 조건 검증 (작성 후)
@@ -85,9 +95,9 @@ Daily Report 작성 요청을 받으면, **작성 전에 반드시** 아래 문�
 
 | 체크 항목 | 확인 방법 |
 |----------|----------|
-| 전체 종목 포함? | `docs/PORTFOLIO.md`와 대조 |
-| 7개 섹션 모두 포함? | `OPERATION_GUIDE.md` 템플릿과 대조 |
-| 매수 조건 4가지 점검? | `OPERATION_MANUAL.md` 규칙과 대조 |
+| 전체 종목 포함? | `PORTFOLIO`와 대조 |
+| 7개 섹션 모두 포함? | `OPERATION_GUIDE` 템플릿과 대조 |
+| 매수 조건 4가지 점검? | `OPERATION_MANUAL` 규칙과 대조 |
 | 익절/손절 기준 계산? | 익절 +15%, 손절 -7% |
 | Action Items 구체적? | 종목, 가격, 수량, 금액 포함 |
 | 전일비 정확히 계산? | JSON에서 어제/오늘 종가 직접 비교 |
@@ -113,11 +123,9 @@ Daily Report 섹션 7에 더블 체크 결과 기록:
 3. 테이블 형식 비교 (종목 수, 컬럼 일치)
 4. 누락된 항목이 있으면 즉시 수정
 
-> **참고 레포트**: 2026년 1월 27일 (https://www.notion.so/2f5ef155d1718142a517d7f91eb9efdc)
-
 ### 3.2. Notion 정보
 
-#### 주요 페이지 및 데이터베이스
+#### KR 주요 페이지 및 데이터베이스
 
 | 항목 | ID | URL |
 |------|-----|-----|
@@ -126,15 +134,24 @@ Daily Report 섹션 7에 더블 체크 결과 기록:
 | Daily Report DB | `dfc9689988de437dbefdcd7a2a9b9184` | https://www.notion.so/dfc9689988de437dbefdcd7a2a9b9184 |
 | Daily Report Data Source | `277dc1bd-56d7-466f-a991-aa45ed0c65fb` | (페이지 생성 시 사용) |
 
-#### Daily Report 생성 시 사용할 parent
-
+**KR Daily Report 생성 시 사용할 parent:**
 ```json
 {"data_source_id": "277dc1bd-56d7-466f-a991-aa45ed0c65fb"}
 ```
 
+> **참고 레포트 (KR)**: 2026년 1월 27일 (https://www.notion.so/2f5ef155d1718142a517d7f91eb9efdc)
+
+#### US IRA Notion 정보
+
+> **TODO**: US IRA용 Notion DB 생성 후 여기에 추가
+
 ### 3.3. 기록 규칙
 
-- **Daily Report Name**: "2026년 1월 27일" (날짜만, 요일 없음)
+| 시장 | Daily Report Name 형식 |
+|------|----------------------|
+| KR | "2026년 1월 27일" |
+| US | "US IRA 2026년 1월 27일" |
+
 - **매매 히스토리**: 날짜별 섹션으로 기록 (DB 아님, 페이지 형식)
 - **미체결 주문**: 해당 날짜 섹션에 "종목명 매수 미체결"로 기록
 
@@ -242,10 +259,13 @@ MA10 상한: MA10 × 1.02
 
 ### 2026-01-30
 
-- **완료**: `CLAUDE.md`를 clae 템플릿에 맞게 재구성 (1. 파일 목록, 2. 프로젝트 개요, 3. 작업 원칙, 4. 작업 이력)
+- **완료**:
+  - `CLAUDE.md`를 clae 템플릿에 맞게 재구성
+  - KR/US 폴더 구조 분리 (`docs/kr/`, `docs/us/`, `data/kr/`, `data/us/`)
+  - US IRA 문서 템플릿 생성 (`PORTFOLIO_US.md`, `OPERATION_MANUAL_US.md`, `OPERATION_GUIDE_US.md`)
 - **진행 중**: 없음
-- **문제/결정**: 기존 내용을 3. 작업 원칙 하위로 이동
-- **다음 할 일**: 없음
+- **문제/결정**: 폴더 분리 + 접미사 방식 혼용
+- **다음 할 일**: US 데이터 수집 스크립트 수정, US Notion DB 생성
 
 ---
 
