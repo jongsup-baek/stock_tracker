@@ -6,8 +6,29 @@
 
 | 종목명 | 티커 |
 | --- | --- |
+| iShares Bitcoin Trust ETF | IBIT |
+| Strategy Inc | MSTR |
+| MicroSectors FANG+ 3X | FNGU |
+| Tesla | TSLA |
+| NVIDIA | NVDA |
+| Direxion Daily FTSE China Bull 3X | YINN |
+| DB Gold Double Long ETN | DGP |
+| SPDR Gold Shares | GLD |
+| Direxion Daily FTSE China Bear 3X | YANG |
 | Apple | AAPL |
+| Alphabet | GOOGL |
 | Microsoft | MSFT |
+| Amazon | AMZN |
+| Meta Platforms | META |
+| Taiwan Semiconductor | TSM |
+| Netflix | NFLX |
+| AMD | AMD |
+| Snowflake | SNOW |
+| GraniteShares 2x Long NVDA | NVDL |
+| ProShares Bitcoin ETF | BITO |
+| Fidelity Wise Origin Bitcoin | FBTC |
+| Broadcom | AVGO |
+| Direxion Daily AVGO Bull 2X | AVL |
 
 > 💡 **종목 추가/삭제**: 이 표에서 종목을 추가/삭제하면 GitHub Actions가 자동으로 해당 종목의 데이터를 수집합니다.
 

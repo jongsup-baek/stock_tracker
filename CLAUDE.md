@@ -12,14 +12,16 @@
 
 | 파일/폴더 | 설명 |
 |-----------|------|
-| `stock_fetcher.py` | 메인 스크립트 (데이터 수집) |
+| `stock_fetcher.py` | KR 메인 스크립트 (네이버 금융) |
+| `stock_fetcher_us.py` | US 메인 스크립트 (Yahoo Finance) |
 | `extract_watchlist.py` | `PORTFOLIO.md`에서 종목 코드 파싱 |
 | `requirements.txt` | Python 의존성 |
 | `data/kr/` | 국내 주식 데이터 (JSON/CSV) |
-| `data/us/` | 미국 주식 데이터 (JSON/CSV) |
+| `data/us/` | 미국 주식 데이터 (JSON) |
 | `docs/kr/` | 국내 운영 문서 |
 | `docs/us/` | 미국 IRA 운영 문서 |
-| `.github/workflows/fetch_stocks.yml` | GitHub Actions |
+| `.github/workflows/fetch_stocks.yml` | KR GitHub Actions |
+| `.github/workflows/fetch_stocks_us.yml` | US GitHub Actions |
 
 ### 문서 경로
 
@@ -37,7 +39,7 @@
 | 시장 | 데이터 소스 | 장 마감 시간 |
 |------|------------|-------------|
 | **KR** | 네이버 금융 | 월-금 오후 6시 (KST) |
-| **US** | (TODO) | 미국 장 마감 후 |
+| **US** | Yahoo Finance | 월-금 EST 4:30PM (KST 오전 6:30) |
 
 ---
 
@@ -143,7 +145,16 @@ Daily Report 섹션 7에 더블 체크 결과 기록:
 
 #### US IRA Notion 정보
 
-> **TODO**: US IRA용 Notion DB 생성 후 여기에 추가
+| 항목 | ID | URL |
+|------|-----|-----|
+| US IRA 시장 정보 (메인) | `2f8ef155d17181beaeebe284b2eceaef` | https://www.notion.so/2f8ef155d17181beaeebe284b2eceaef |
+| Daily Report DB (US) | `7c86d46c5a434730ab9a1ef4b78cc110` | https://www.notion.so/7c86d46c5a434730ab9a1ef4b78cc110 |
+| Daily Report Data Source (US) | `db2f0adf-cb47-4814-a5d0-f2372e6aa4ac` | (페이지 생성 시 사용) |
+
+**US Daily Report 생성 시 사용할 parent:**
+```json
+{"data_source_id": "db2f0adf-cb47-4814-a5d0-f2372e6aa4ac"}
+```
 
 ### 3.3. 기록 규칙
 
